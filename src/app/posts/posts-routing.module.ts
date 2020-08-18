@@ -1,3 +1,4 @@
+import { AuthGuardService } from './../auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PostsComponent } from './posts/posts.component';
@@ -11,7 +12,7 @@ const routes: Routes = [
   },
   {path: 'posts', component: PostsComponent},
   {path: 'post/:id', component: PostComponent},
-  {path: 'create', component: EditorComponent}
+  {path: 'create', component: EditorComponent, canActivate: [AuthGuardService]}
 
 ];
 
