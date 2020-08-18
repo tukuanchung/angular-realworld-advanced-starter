@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-editor',
@@ -7,21 +7,25 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
+  constructor() { }
+  get tags(): FormArray {
+    return this.post.get('tags') as FormArray;
+  }
   post = new FormGroup({
-    title: new FormControl('default title'),
-    body: new FormControl(),
+    title: new FormControl('default title' , Validators.required),
+    body: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(10)
+    ]),
     tags: new FormArray([
       new FormControl('Angular'),
       new FormControl('HTML'),
       new FormControl('CSS')
     ])
   });
-  constructor() { }
 
+  git;
   ngOnInit() {
-  }
-  get tags(): FormArray {
-    return this.post.get('tags') as FormArray;
   }
 
   addTag(tag){
@@ -36,5 +40,12 @@ export class EditorComponent implements OnInit {
 
   createPost(){
     console.log(this.post.value);
+  }
+  get title(): AbstractControl{
+    return this.post.get('title');
+  }
+
+  get body(): AbstractControl{
+    return this.post.get('body');
   }
 }

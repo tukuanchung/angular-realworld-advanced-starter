@@ -6,9 +6,16 @@
         <form [formGroup]="post">
           <fieldset class="form-group">
             <input class="form-control form-control-lg" type="text" placeholder="Post Title" formControlName="title">
+            <div *ngIf="title.dirty && title.invalid">
+              <span *ngIf="title.errors['required']"> please write the title</span>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <textarea class="form-control" rows="8" placeholder="Write your post (in markdown)" formControlName="body"></textarea>
+            <div *ngIf="body.dirty && body.invalid">
+              <span *ngIf="body.errors['required']"> please write the body</span>
+              <span *ngIf="body.errors['minlength']"> At least 10 words</span>
+            </div>
           </fieldset>
           <fieldset class="form-group">
             <input class="form-control" type="text" placeholder="Enter tags"
