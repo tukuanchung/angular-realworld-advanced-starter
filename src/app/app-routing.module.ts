@@ -7,18 +7,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {path: '', component: MainComponent
-   , children: [
-    {
-      path: '', redirectTo: 'posts',
-      pathMatch: 'full'
-    },
-    {path: 'posts', component: PostsComponent},
-    {path: 'post/:id', component: PostComponent},
-    {path: 'create', component: EditorComponent}
-   ]
+  {path: '', component: MainComponent,
+   loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule)
   },
-  {path: 'login', component: LoginComponent}
+  {path: 'login', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+ }
 ];
 
 
