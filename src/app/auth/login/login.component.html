@@ -6,41 +6,46 @@
         <h1 class="text-xs-center">Sign in</h1>
 
         <div>
-          <fieldset class="form-group" [ngClass]="{'has-danger': email.dirty && email.invalid}">
-            <input name="email" class="form-control form-control-lg" type="text" placeholder="Email"
-            [(ngModel)]="loginData.email"
-            required
-            email
-            #email="ngModel">
-            <span *ngIf="email.dirty && email.invalid">
-              <span *ngIf="email.errors['required']">
-                *請輸入 email
+          <form #loginForm="ngForm">
+            <fieldset class="form-group" [ngClass]="{'has-danger': email.dirty && email.invalid}">
+              <input name="email" class="form-control form-control-lg" type="text" placeholder="Email"
+              [(ngModel)]="loginData.email"
+              required
+              email
+              #email="ngModel">
+              <span *ngIf="email.dirty && email.invalid">
+                <span *ngIf="email.errors['required']">
+                  *請輸入 email
+                </span>
+                <span *ngIf="email.errors['email']">
+                  * Email 格式不正確
+                </span>
               </span>
-              <span *ngIf="email.errors['email']">
-                * Email 格式不正確
+            </fieldset>
+            {{ email.value }}
+            <fieldset class="form-group" [ngClass]="{'has-danger': password.dirty && password.invalid}">
+              <input name="password" class="form-control form-control-lg" type="password" placeholder="Password"
+              minlength="4"
+              required
+              [(ngModel)]="loginData.password"
+              #password="ngModel">
+              <span *ngIf="password.dirty && password.invalid">
+                <span *ngIf="password.errors['required']">
+                  *請輸入 password
+                </span>
+                <span *ngIf="password.errors['minlength']">
+                  *password length >= 4
+                </span>
               </span>
-            </span>
-          </fieldset>
-          {{ email.value }}
-          <fieldset class="form-group" [ngClass]="{'has-danger': password.dirty && password.invalid}">
-            <input name="password" class="form-control form-control-lg" type="password" placeholder="Password"
-            minlength="4"
-            required
-            [(ngModel)]="loginData.password"
-            #password="ngModel">
-            <span *ngIf="password.dirty && password.invalid">
-              <span *ngIf="password.errors['required']">
-                *請輸入 password
-              </span>
-              <span *ngIf="password.errors['minlength']">
-                *password length >= 4
-              </span>
-            </span>
-          {{ password.value }}
-          </fieldset>
-          <button class="btn btn-lg btn-primary pull-xs-right" (click)="doLogin()">
-            Sign in
-          </button>
+            {{ password.value }}
+            </fieldset>
+            <button class="btn btn-lg btn-primary pull-xs-right" (click)="doLogin()" [disabled]="loginForm.invalid">
+              Sign in
+            </button>
+            {{ loginForm.invalid }}
+          </form>
+
+
         </div>
       </div>
 
